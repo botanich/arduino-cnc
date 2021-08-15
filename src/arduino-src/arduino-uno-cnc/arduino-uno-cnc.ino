@@ -4,7 +4,7 @@ const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
 int push_button[4] = {0, 1, 10, 13};
-int light_diods[3] = {6, 7, 8};
+int action[3] = {6, 7, 8};
 int button_state[4];
 bool gotta_stop = false;
 bool gotta_start1 = true, gotta_start2 = true;
@@ -13,14 +13,14 @@ void dynamic_stop() {
     gotta_stop = false;
     gotta_start1 = true;
     gotta_start2 = true;
-    digitalWrite(light_diods[0], LOW);
-    digitalWrite(light_diods[1], LOW);
+    digitalWrite(action[0], LOW);
+    digitalWrite(action[1], LOW);
     delay(200);
-    digitalWrite(light_diods[2], HIGH);
+    digitalWrite(action[2], HIGH);
     lcd.clear();
     lcd.print("Dynamic stop");
     delay(2000);
-    digitalWrite(light_diods[2], LOW);
+    digitalWrite(action[2], LOW);
     lcd.clear();
     lcd.print("Stopped");
 }
@@ -28,7 +28,7 @@ void dynamic_stop() {
 void start_bending() {
     gotta_stop = true;
     gotta_start1 = false;
-    digitalWrite(light_diods[0], HIGH);
+    digitalWrite(action[0], HIGH);
     lcd.clear();
     lcd.print("Bending");
 }
@@ -36,7 +36,7 @@ void start_bending() {
 void start_reverse() {
     gotta_stop = true;
     gotta_start2 = false;
-    digitalWrite(light_diods[1], HIGH);
+    digitalWrite(action[1], HIGH);
     lcd.clear();
     lcd.print("Reverse");
 }
@@ -49,8 +49,9 @@ void setup() {
     pinMode(push_button[i], INPUT);
   }
   for (int i = 0; i < 3; i++) {
-    pinMode(light_diods[i], OUTPUT);
+    pinMode(action[i], OUTPUT);
   }
+  lcd.print("On");
 }
 
 void loop() {
